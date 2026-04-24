@@ -1,27 +1,22 @@
 import unittest
 from estimate_pi import estimate_pi, PiFileWriter
-import time
 
 class TestEstimatePi(unittest.TestCase):
     def test_estimate_pi(self):
         pi_expected = 3.141592653589793
         pi_actual = estimate_pi(1000000)
-        self.assertAlmostEqual(pi_expected, pi_actual, delta=0.01) #repeatable
+        self.assertAlmostEqual(pi_expected, pi_actual, delta=0.01)
 
-# question 2 and 3 --------------------------------------------------------
+# question 3 -------------------------------------------------------------------
     def test_boundary(self): #Test1
         pi_actual = estimate_pi(1000000)
-        self.assertGreater(pi_actual, 3.13)
-        self.assertLess(pi_actual, 3.15) 
+        self.assertGreater(pi_actual, 3.14)
+        self.assertLess(pi_actual, 3.15)
 
-    def test_fast(self): #Test2
-        start_time = time.time()
-        self.test_estimate_pi()
-        end_time = time.time()
-        # self.assertTrue((end_time - start_time) > 100)
-        print("time: ", end_time - start_time)
-# --------------------------------------------------------
-
+    def test_returns_float(self): #Test2
+        pi_actual = estimate_pi(1000000)
+        self.assertIsInstance(pi_actual, float)
+# -------------------------------------------------------------------------------
 
 # question 4 --------------------------------------------------------------------
 
@@ -33,21 +28,20 @@ class FakePiFileWriter:
 
     @staticmethod
     def write(content, file_path):
-        # We capture via a class-level store for static method compatibility
+        # writes to init variables so simulate a file
         FakePiFileWriter.written_content = content
         FakePiFileWriter.written_path = file_path
-
 
 class TestPiFileWriter(unittest.TestCase):
     def test_fake_writer_stores_content(self):
         """Test that the writer receives the correct pi string."""
-        pi_value = "3.1415" # gör egna 
+        pi_value = "3.1415"
         FakePiFileWriter.write(pi_value, "fake/path.txt")
+
+        # below we use assert to check inside the init to verify 
         self.assertEqual(FakePiFileWriter.written_content, pi_value)
         self.assertEqual(FakePiFileWriter.written_path, "fake/path.txt")
-        # print(FakePiFileWriter.written_content)
-        # 2.643s
-#--------------------------------------------------------------------
+#---------------------------------------------------------------------------------------
 
 if __name__ == '__main__':
     unittest.main()
