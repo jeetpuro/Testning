@@ -8,12 +8,12 @@ class TestEstimatePi(unittest.TestCase):
         self.assertAlmostEqual(pi_expected, pi_actual, delta=0.01)
 
 # question 3 -------------------------------------------------------------------
-    def test_boundary(self): #Test1
-        pi_actual = estimate_pi(1000000)
-        self.assertIsNot(pi_actual, 2,71828) # Euler number
-
+    def test_zero_boundary(self): #Test1
+        with self.assertRaises(ZeroDivisionError):
+            estimate_pi(0)
+            
     def test_returns_float(self): #Test2
-        pi_actual = estimate_pi(1000000)
+        pi_actual = estimate_pi(10)
         self.assertIsInstance(pi_actual, float)
 # -------------------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ class TestPiFileWriter(unittest.TestCase):
         # below we use assert to check inside the init to verify 
         self.assertEqual(FakePiFileWriter.written_content, pi_value)
         self.assertEqual(FakePiFileWriter.written_path, "fake/path.txt")
-#---------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------
 
 if __name__ == '__main__':
     unittest.main()
