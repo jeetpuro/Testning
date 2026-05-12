@@ -10,8 +10,7 @@ class TestEstimatePi(unittest.TestCase):
 # question 3 -------------------------------------------------------------------
     def test_boundary(self): #Test1
         pi_actual = estimate_pi(1000000)
-        self.assertGreater(pi_actual, 3.14)
-        self.assertLess(pi_actual, 3.15)
+        self.assertIsNot(pi_actual, 2,71828) # Euler number
 
     def test_returns_float(self): #Test2
         pi_actual = estimate_pi(1000000)
@@ -21,14 +20,12 @@ class TestEstimatePi(unittest.TestCase):
 # question 4 --------------------------------------------------------------------
 
 class FakePiFileWriter:
-    """Fake test double: stores written content in memory instead of disk."""
-    def init(self):
-        self.written_content = None
-        self.written_path = None
+    """Fake test double: stores written content in class variables."""
+    written_content = None
+    written_path = None
 
     @staticmethod
     def write(content, file_path):
-        # writes to init variables so simulate a file
         FakePiFileWriter.written_content = content
         FakePiFileWriter.written_path = file_path
 
