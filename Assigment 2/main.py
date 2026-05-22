@@ -21,4 +21,3 @@ def calculate_final_grade(attendance, midterm, final):
             return status
 
     return status
-
